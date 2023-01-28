@@ -1,20 +1,24 @@
-lib physics;
+library physics;
 
+// pub const MAX_WIDTH = 100;
+// pub const MAX_HEIGHT = 100;
 pub struct State {
-    ball_position: Vec<u64>, 
-    velocity: Velocity;
-    players: Vec<Player>,
-    last_action: Action
+    ball_position: PhysicsVector,
+    velocity: PhysicsVector
+    // players: Vec<Player>,
+}
+pub struct PhysicsVector {
+    x: u64,
+    y: u64,
+    z: u64
+}
+pub struct Action {
+    // player: Player,
+    direction: PhysicsVector,
+    energy: u64
 }
 
-pub struct Player {
-    position: Position 
-}
-
-pub type Position = [u64, 2];
-pub type Velocity = [u64, 2]
-
-
-pub fn apply_force(pre_state: State, player: Player, direction: Velocity, energy: u64) -> State {
-
+pub fn apply_force(pre_state: State, direction: PhysicsVector) -> State {
+    // TODO
+    pre_state
 }
