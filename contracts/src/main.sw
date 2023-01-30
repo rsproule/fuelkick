@@ -4,14 +4,16 @@ dep physics;
 dep interface;
 use interface::FuelKick;
 use physics::{State, apply_force, PhysicsVector};
-use std::storage::StorageVec;
+use std::storage::StorageMap;
 use std::auth::msg_sender;
 
 storage {
     physics_state: State = State {
-            ball_position: PhysicsVector {x: 0, y: 0, z: 0},
-            velocity: PhysicsVector {x: 0, y: 0, z: 0}
+            position: PhysicsVector {x: 0, y: 0, z: 0},
+            velocity: PhysicsVector {x: 0, y: 0, z: 0},
+            t: 0
         },
+    players: StorageMap<Address, u64> = StorageMap {}
 }
 
 impl FuelKick for Contract {
@@ -29,6 +31,16 @@ impl FuelKick for Contract {
     
     #[storage(read, write)]
     fn join(energy_to_buy: u64) {
-
+        let sender = msg_sender();
+        if let Identity::Address(addr) = sender.unwrap() {
+            // for now this can just be arbitrary number, 
+            // in reality we will just want this to be the same as tokens
+            // which removes the need for this. 
+            // they just need to chose their position eventually (if we want that mechanic)
+            storage.players.insert(addr, energy_to_buy);
+            // log, 
+        } else {
+            revert(0);
+        }
     }
 }
