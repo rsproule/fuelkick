@@ -57,6 +57,42 @@ pub fn get_distance(from: PhysicsVector, to: PhysicsVector) -> u64 {
     let dy = if from.y > to.y {from.y - to.y } else {to.y - from.y};
     let dz = if from.z > to.z {from.z - to.z } else {to.z - from.z};
     let sum_d = (dx * dx) + (dy * dy) + (dz * dz);
-
     sqrt_ceil(sum_d)
+}
+
+#[test]
+fn test_distance() {
+    let point1 = PhysicsVector {
+        x: 0,
+        y: 0, 
+        z: 0
+    };
+    // good ole pythagorean triple
+    let point2 = PhysicsVector {
+        x: 3,
+        y: 4, 
+        z: 0
+    };
+    
+    let d = get_distance(point1, point2);
+    let dr = get_distance(point1, point2);
+    assert(d == dr);
+    assert(d == 5);
+    let far_point = PhysicsVector {x: 68, y: 285, z: 0};
+    let d = get_distance(point1, far_point);
+    assert(d == 293);
+
+    let a = PhysicsVector {
+        x: 4,
+        y: 4,
+        z: 4
+    };
+    let b = PhysicsVector {
+        x: 17,
+        y: 6,
+        z: 2
+    };
+    // 13.304
+    let d = get_distance(a, b);
+    assert(d == 14);
 }

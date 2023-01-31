@@ -27,7 +27,7 @@ pub fn sqrt_ceil(x: u64) -> u64 {
     let mut min = 1;
     let mut max = x / 2;
     let mut res = 0;
-    while min < max {
+    while min <= max {
         let mid = (min + max) / 2;
         let sqr = mid * mid;
         if sqr == x {
@@ -56,4 +56,6 @@ fn test_sqrt_ceil() {
     assert(seven == 7);
     let seven = sqrt_ceil(48);
     assert(seven == 7);
+    let five = sqrt_ceil(25);
+    assert(five == 5);
 }
