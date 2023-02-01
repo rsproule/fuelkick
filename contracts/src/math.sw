@@ -1,4 +1,5 @@
 library math; 
+use signed_integers::i64::I64;
 
 // omptimize this, currently just using binary search
 // this gets the ceiling 
@@ -23,6 +24,8 @@ pub fn sqrt_floor(x: u64) -> u64 {
     return res;
 }
 
+// mostly using this because we want to charge people 
+// for distance moved and better to round up to prevent abuse
 pub fn sqrt_ceil(x: u64) -> u64 {
     let mut min = 1;
     let mut max = x / 2;
@@ -58,4 +61,11 @@ fn test_sqrt_ceil() {
     assert(seven == 7);
     let five = sqrt_ceil(25);
     assert(five == 5);
+}
+ 
+#[test]
+fn test_i64() {
+    let i = I64::from(9);
+    let t = sqrt_ceil(i.into());
+    assert(t == 3);
 }

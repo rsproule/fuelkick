@@ -4,15 +4,16 @@ dep math;
 dep physics;
 dep interface;
 use interface::{Kick, Move, Join, Player, FuelKick};
-use physics::{State, apply_force, PhysicsVector, get_distance};
+use physics::{State, apply_force, PhysicsVector, get_distance, magnitude};
 use std::storage::StorageMap;
 use std::auth::msg_sender;
 use std::logging::log;
+use signed_integers::i64::I64;
 
 storage {
     physics_state: State = State {
-            position: PhysicsVector {x: 0, y: 0, z: 0},
-            velocity: PhysicsVector {x: 0, y: 0, z: 0},
+            position: PhysicsVector {x: I64::new(), y: I64::new(), z: I64::new()},
+            velocity: PhysicsVector {x: I64::new(), y: I64::new(), z: I64::new()},
             t: 0
         },
     players: StorageMap<Address, Player> = StorageMap {}
@@ -23,11 +24,17 @@ impl FuelKick for Contract {
     fn kick(velocity: PhysicsVector) {
         // TODO: some auth checks and spend energy 
         let sender = msg_sender();
-        // let player
+        // magnitude is my energy thing, basically the cost of this operation 
+        let magnitude = magnitude(velocity);
         let post_state = apply_force(storage.physics_state, velocity);
         // TODO: check for win conditions
         storage.physics_state = post_state; 
-
+        // log(Kick{
+        //     player: sender,
+        //     direction: velocity,
+        //     t: height(),
+        //     energy: magnitude 
+        // });
     }
     
     #[storage(read, write)]
@@ -59,7 +66,7 @@ impl FuelKick for Contract {
         let sender = msg_sender();
         if let Identity::Address(addr) = sender.unwrap() {
             // log this
-            let player = storage.players.get(addr);
+            let player = storage.players.get(addr).unwrap();
 
             let pre_location = player.location;
             let distance = get_distance(player.location, to);

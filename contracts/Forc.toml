@@ -5,3 +5,4 @@ license = "Apache-2.0"
 name = "fuelkick"
 
 [dependencies]
+signed_integers = { git = "https://github.com/fuellabs/sway-libs", branch = "master" }
