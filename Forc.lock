@@ -12,7 +12,7 @@ dependencies = [
 
 [[package]]
 name = 'signed_integers'
-source = 'git+https://github.com/fuellabs/sway-libs?branch=master#f33fc23bdfd4b57e6be31c43de7181899bf0d28c'
+source = 'git+https://github.com/fuellabs/sway-libs?branch=master#4ca20a044549c9e7abde3603b0708cb84e89e92b'
 dependencies = ['std']
 
 [[package]]

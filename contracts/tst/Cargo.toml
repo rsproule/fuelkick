@@ -1,9 +1,0 @@
-[project]
-name = "fuelkick-tests"
-author = "rsproule"
-version = "0.0.1"
-
-[[test]]
-harness = true
-name = "fuelkick-tests"
-path = "src/harness.rs"
